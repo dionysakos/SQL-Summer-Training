@@ -1,0 +1,6 @@
+SELECT * 
+FROM Users
+WHERE mail REGEXP '^[A-Za-z][A-Za-z0-9_.-]*@leetcode\\.com$' -- . is a special character so we use \\ 
+AND BINARY mail LIKE '%@leetcode.com'; -- In order to prevent validating emails like %@leetcode.COM we use BINARY 
+--We cant use BINARY in line 4 because of the REGEXP 
+-- REGEXP : ^ Start, $ End, * like FoCS Regex
