@@ -1,0 +1,9 @@
+UPDATE Salary
+SET Salary.sex = 
+CASE
+WHEN Salary.sex = 'f' THEN 'm'
+WHEN Salary.sex = 'm' THEN 'f'
+ELSE Sex
+END;
+
+-- The SET clause must immediately follow UPDATE table_name, thus the CASE ... END must come after the = sign
