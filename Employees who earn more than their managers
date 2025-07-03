@@ -1,5 +1,6 @@
-SELECT e.Name AS Employee
+SELECT e.Name AS Employee -- Not necessary 
 FROM Employee e
 LEFT JOIN Employee m
 ON e.managerId = m.id
 WHERE e.salary>m.salary; 
+
