@@ -2,3 +2,6 @@ Select Person.email AS Email
 FROM Person 
 GROUP BY Person.email
 HAVING COUNT(Person.email)>1
+
+-- WHERE only operates on an individual row, whereas HAVING on group of rows
+-- We use HAVING after GROUP BY 
