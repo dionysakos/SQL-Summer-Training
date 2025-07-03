@@ -5,3 +5,4 @@ HAVING COUNT(Person.email)>1
 
 -- WHERE only operates on an individual row, whereas HAVING on group of rows
 -- We use HAVING after GROUP BY 
+-- So we use GROUP BY + HAVING with aggregate functions
