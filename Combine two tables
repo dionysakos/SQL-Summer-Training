@@ -1,0 +1,21 @@
+SELECT Person.lastName,
+Person.firstName,
+Address.city,
+Address.state
+FROM Person
+LEFT JOIN Address
+ON Address.personId = Person.personId
+WHERE Person.lastName IS NOT NULL 
+AND Person.firstName IS NOT NULL
+
+UNION
+
+SELECT Person.lastName,
+Person.firstName,
+Address.city,
+Address.state
+FROM Person
+RIGHT JOIN Address
+ON Address.personId = Person.personId
+WHERE Person.lastName IS NOT NULL 
+AND Person.firstName IS NOT NULL;
