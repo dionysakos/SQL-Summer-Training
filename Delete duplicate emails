@@ -1,0 +1,7 @@
+DELETE p_temp
+FROM Person p_temp
+JOIN Person p
+ON p_temp.email = p.email
+WHERE p.id<p_temp.id;
+
+--JOIN is like INNER JOIN
