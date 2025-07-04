@@ -1,0 +1,7 @@
+SELECT customer_number
+FROM  Orders
+GROUP BY customer_number -- per person 
+ORDER BY COUNT(order_number) DESC
+LIMIT 1;
+
+-- Its like sorting a table in descendng order and taking the maximum (first - LIMIT 1) element
