@@ -11,3 +11,4 @@ SELECT IFNULL(
 )AS SecondHighestSalary;
 
 --USING LIMIT ... OFFSET WITH ORDER BY
+-- We use AS subquery (alias, i.e) only when i wnt to write FROM (...) AS subquery because (...) is a temporary object (table)
