@@ -1,0 +1,16 @@
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+ DECLARE n_offs INT;
+ SET n_offs = N-1;
+ RETURN (
+     SELECT DISTINCT salary 
+     FROM Employee
+     ORDER BY salary DESC 
+     LIMIT 1 OFFSET n_offs
+  );
+END
+
+-- The function defined above returns one value only
+-- We use LIMIT 1 in order to return one value only
+-- Using OFFSET we skip the first N-1 values so we get the Nth higher value 
+-- In MySQL, we cannot put expressions like N-1 directly in the OFFSET clause, we have to declare them first and calculate them before using it
