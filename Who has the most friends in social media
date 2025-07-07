@@ -1,0 +1,12 @@
+SELECT id, COUNT(*) AS num
+FROM(
+    SELECT requester_id AS id FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id FROM RequestAccepted
+) AS all_id_together_in_one_column_with_union_all
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1;
+
+-- UNION ALL keeps all rows, including duplicates while UNION Removes duplicate rows
+-- Both return a single list of values
