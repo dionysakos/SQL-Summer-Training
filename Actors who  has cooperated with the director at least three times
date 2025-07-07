@@ -1,0 +1,13 @@
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING COUNT(*) >= 3;
+
+/* 🧠 Analogy in C++:
+With GROUP BY actor_id:
+map<int, int> actorCount;
+actorCount[actor_id]++;
+
+With GROUP BY actor_id, director_id:
+map<pair<int, int>, int> actorDirectorCount;
+actorDirectorCount[{actor_id, director_id}]++; */ 
