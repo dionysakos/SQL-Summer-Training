@@ -1,0 +1,10 @@
+SELECT score,
+DENSE_RANK() OVER(ORDER BY score DESC) AS `rank`
+FROM Scores;
+
+/* ✅ In Practice
+Use DENSE_RANK() when:
+You want no gaps in ranks, even after ties.
+
+Use RANK() when:
+You want ranking that reflects the position in the list (like Olympic medals: two 2nd places → next is 4th). */
