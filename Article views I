@@ -1,0 +1,5 @@
+SELECT author_id AS id
+FROM Views
+GROUP BY author_id
+HAVING COUNT(CASE WHEN author_id = viewer_id THEN 1 ELSE NULL END) >=1
+ORDER BY author_id ASC;
