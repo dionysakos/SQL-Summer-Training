@@ -1,0 +1,33 @@
+SELECT  
+LEAST(p1.product_id, p2.product_id) AS product1_id,
+GREATEST(p1.product_id, p2.product_id) AS product2_id,
+CASE
+    WHEN p1.product_id < p2.product_id THEN i1.category
+    ELSE i2.category
+END AS product1_category,
+CASE
+    WHEN p1.product_id < p2.product_id THEN i2.category
+    ELSE i1.category
+END AS product2_category,
+COUNT(DISTINCT p1.user_id) AS customer_count
+FROM ProductPurchases p1
+JOIN ProductPurchases p2 
+ON p1.product_id != p2.product_id 
+AND p2.user_id = p1.user_id
+JOIN ProductInfo i1 
+ON p1.product_id = i1.product_id
+JOIN ProductInfo i2 
+ON p2.product_id = i2.product_id
+GROUP BY 
+LEAST(p1.product_id, p2.product_id),
+GREATEST(p1.product_id, p2.product_id),
+CASE
+    WHEN p1.product_id < p2.product_id THEN i1.category
+    ELSE i2.category
+END,
+CASE
+    WHEN p1.product_id < p2.product_id THEN i2.category
+    ELSE i1.category
+END
+HAVING customer_count >= 3
+ORDER BY customer_count DESC, product1_id ASC, product2_id ASC;
