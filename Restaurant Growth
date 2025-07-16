@@ -1,0 +1,7 @@
+SELECT v2.visited_on,
+(SELECT SUM(amount) FROM Customer WHERE visited_on BETWEEN v1.visited_on AND v2.visited_on) AS amount,
+ROUND((SELECT SUM(amount) FROM Customer WHERE visited_on BETWEEN v1.visited_on AND v2.visited_on)*1.0/7,2) AS average_amount
+FROM Customer v1
+JOIN Customer v2
+ON DATEDIFF(v2.visited_on,v1.visited_on) = 6
+GROUP BY v2.visited_on
