@@ -1,0 +1,23 @@
+SELECT imp.student_id,
+imp.subject,
+bad.score AS first_score,
+imp.score AS latest_score
+FROM Scores bad
+JOIN Scores imp
+ON bad.student_id = imp.student_id AND imp.subject = bad.subject
+WHERE imp.exam_date IN (
+    SELECT MAX(exam_date)
+    FROM Scores
+    WHERE subject = imp.subject AND student_id = imp.student_id
+    GROUP BY student_id 
+)
+AND 
+bad.exam_date IN (
+    SELECT MIN(exam_date)
+    FROM Scores
+    WHERE subject = bad.subject AND student_id = bad.student_id
+    GROUP BY student_id
+)
+AND bad.score < imp.score 
+GROUP BY imp.student_id,imp.subject
+ORDER BY imp.student_id,imp.subject
