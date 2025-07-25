@@ -1,0 +1,10 @@
+SELECT paid.user_id, 
+ROUND(SUM(free.activity_duration)*1.0/COUNT(*),2) AS trial_avg_duration,
+ROUND(SUM(paid.activity_duration)*1.0/COUNT(*),2) AS paid_avg_duration
+FROM UserActivity free
+JOIN UserActivity paid
+ON free.user_id = paid.user_id
+WHERE free.activity_type = 'free_trial' 
+AND paid.activity_type = 'paid'
+GROUP BY paid.user_id
+
