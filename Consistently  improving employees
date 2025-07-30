@@ -1,0 +1,61 @@
+SELECT DISTINCT e.employee_id,
+    e.name,
+    (third.rating - first.rating) AS improvement_score
+FROM employees e
+JOIN performance_reviews first
+    ON first.employee_id = e.employee_id
+JOIN performance_reviews second
+    ON second.employee_id = e.employee_id
+    AND second.review_date > first.review_date
+JOIN performance_reviews third
+    ON third.employee_id = e.employee_id
+    AND third.review_date > second.review_date
+WHERE (third.rating, third.review_date) IN (
+    SELECT pr.rating, pr.review_date
+    FROM performance_reviews pr
+    WHERE pr.employee_id = e.employee_id
+    AND pr.review_date = (
+        SELECT MAX(pr2.review_date)
+        FROM performance_reviews pr2
+        WHERE pr2.employee_id = e.employee_id
+    )
+)
+AND (second.rating, second.review_date) IN (
+    SELECT pr.rating, pr.review_date
+    FROM performance_reviews pr
+    WHERE pr.employee_id = e.employee_id
+    AND pr.review_date = (
+        SELECT MAX(pr2.review_date)
+        FROM performance_reviews pr2
+        WHERE pr2.employee_id = e.employee_id
+        AND pr2.review_date < (
+            SELECT MAX(pr3.review_date)
+            FROM performance_reviews pr3
+            WHERE pr3.employee_id = e.employee_id
+        )
+    )
+)
+AND (first.rating, first.review_date) IN (
+    SELECT pr.rating, pr.review_date
+    FROM performance_reviews pr
+    WHERE pr.employee_id = e.employee_id
+    AND pr.review_date = (
+        SELECT MAX(pr2.review_date)
+        FROM performance_reviews pr2
+        WHERE pr2.employee_id = e.employee_id
+        AND pr2.review_date < (
+            SELECT MAX(pr3.review_date)
+            FROM performance_reviews pr3
+            WHERE pr3.employee_id = e.employee_id
+            AND pr3.review_date < (
+                SELECT MAX(pr4.review_date)
+                FROM performance_reviews pr4
+                WHERE pr4.employee_id = e.employee_id
+            )
+        )
+    )
+)
+AND first.rating < second.rating
+AND second.rating < third.rating
+GROUP BY e.employee_id, e.name, improvement_score
+ORDER BY improvement_score DESC, e.name;
